@@ -15,7 +15,7 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 30) {
             Image("dinner")
-                .resizable()    
+                .resizable()
                 .aspectRatio(contentMode: .fit)
             Text("今天吃什麼?")
                 .bold()
