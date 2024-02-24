@@ -9,22 +9,33 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    let foods = ["漢堡", "沙拉", "披薩", "義大利麵", "雞腿便當", "刀削麵", "火鍋", "牛肉麵", "關東煮", "豬頭皮"]
-    @State var selectedFood: String?
+    let foods = Food.examples
+    @State var selectedFood: Food?
     
     var body: some View {
         VStack(spacing: 30) {
-            Image("dinner")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+            Group {
+                if (selectedFood == .none) {
+                    Image("dinner")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                } else {
+                    Text(selectedFood!.image)
+                        .font(.system(size: 200))
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
+                }
+            }
+            .frame(height: 250)
             Text("今天吃什麼?")
                 .bold()
+            Spacer()
             if let food = selectedFood {
-                Text(food)
+                Text(food.name)
                     .font(.largeTitle)
                     .bold()
                     .foregroundStyle(.green)
-                    .id(selectedFood)
+                    .id(selectedFood?.name)
                     .transition(.asymmetric(
                         insertion: .opacity.animation(.easeInOut(duration: 0.5).delay(0.2)),
                         removal: .opacity.animation(.easeInOut(duration: 0.4))
@@ -49,7 +60,7 @@ struct ContentView: View {
             .buttonStyle(.bordered)
         }
         .padding()
-        .frame(maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.secondarySystemBackground))
         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
         .buttonStyle(.borderedProminent)

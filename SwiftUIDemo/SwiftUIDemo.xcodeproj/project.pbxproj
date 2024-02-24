@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		535CF0882B89994600D24877 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535CF0872B89994600D24877 /* Food.swift */; };
 		5368653B2B81ACED00D181AC /* SwiftUIDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5368653A2B81ACED00D181AC /* SwiftUIDemoApp.swift */; };
 		5368653D2B81ACED00D181AC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5368653C2B81ACED00D181AC /* ContentView.swift */; };
 		5368653F2B81ACEF00D181AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5368653E2B81ACEF00D181AC /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		535CF0872B89994600D24877 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		536865372B81ACED00D181AC /* SwiftUIDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5368653A2B81ACED00D181AC /* SwiftUIDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoApp.swift; sourceTree = "<group>"; };
 		5368653C2B81ACED00D181AC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			children = (
 				5368653A2B81ACED00D181AC /* SwiftUIDemoApp.swift */,
 				5368653C2B81ACED00D181AC /* ContentView.swift */,
+				535CF0872B89994600D24877 /* Food.swift */,
 				5368653E2B81ACEF00D181AC /* Assets.xcassets */,
 				536865432B81ACEF00D181AC /* Persistence.swift */,
 				536865452B81ACEF00D181AC /* SwiftUIDemo.xcdatamodeld */,
@@ -145,6 +148,7 @@
 			files = (
 				536865472B81ACEF00D181AC /* SwiftUIDemo.xcdatamodeld in Sources */,
 				536865442B81ACEF00D181AC /* Persistence.swift in Sources */,
+				535CF0882B89994600D24877 /* Food.swift in Sources */,
 				5368653D2B81ACED00D181AC /* ContentView.swift in Sources */,
 				5368653B2B81ACED00D181AC /* SwiftUIDemoApp.swift in Sources */,
 			);
