@@ -8,27 +8,13 @@
 import Foundation
 
 
-@propertyWrapper struct Suffix: Equatable {
-    var wrappedValue: Double
-    private let suffix: String
-    
-    init(wrappedValue: Double, _ suffix: String) {
-        self.wrappedValue = wrappedValue
-        self.suffix = suffix
-    }
-    
-    var projectedValue: String {
-        wrappedValue.formatted() + " \(suffix)"
-    }
-}
-
 struct Food: Equatable {
     var name: String
     var image: String
-    @Suffix("大卡") var calorie: Double = .zero
-    @Suffix("g") var carb: Double      = .zero
-    @Suffix("g") var fat: Double       = .zero
-    @Suffix("g") var protein: Double   = .zero
+    @Suffix("卡") var calorie: Double = .zero
+    @Suffix("g") var carb: Double = .zero
+    @Suffix("g") var fat: Double = .zero
+    @Suffix("g") var protein: Double = .zero
     
     static let examples = [
         Food(name: "漢堡", image: "🍔", calorie: 294, carb: 14, fat: 24, protein: 17),
