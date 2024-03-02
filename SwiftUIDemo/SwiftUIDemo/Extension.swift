@@ -11,7 +11,7 @@ import SwiftUI
 
 
 extension AnyTransition {
-    static let asymmetricInserion = Self.asymmetric(
+    static let delayInserion = Self.asymmetric(
         insertion: .opacity.animation(.easeInOut(duration: 0.5).delay(0.2)),
         removal: .opacity.animation(.easeInOut(duration: 0.4)))
     
@@ -32,13 +32,14 @@ extension View {
             .controlSize(.large)
     }
     
-    func foodMainButton(radius: CGFloat = 8, style: some ShapeStyle = Color(.systemBackground)) -> some View {
-        RoundedRectangle(cornerRadius: radius).foregroundStyle(style)
+    func foodMainButton(radius: CGFloat = 8, style: some ShapeStyle = .bg) -> some View {
+        RoundedRectangle(cornerRadius: radius).fill(.bg)
     }
 }
 
 
-extension Color {
-    static let bg = Color(.systemBackground)
-    static let bg2 = Color(.secondarySystemBackground)
+extension ShapeStyle where Self == Color {
+    static var bg: Color { Color(.systemBackground) }
+    static var bg2: Color { Color(.secondarySystemBackground) }
+    
 }

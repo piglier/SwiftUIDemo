@@ -32,7 +32,7 @@ struct ContentView: View {
             .capluseButton()
             .animation(Animation.foodEaseInOut, value: selectedFood)
             .animation(Animation.foodSpring, value: shouldShowInfo)
-        }.background(Color.bg)
+        }.background(.bg2)
     }
     
     var selectFoodView: some View {
@@ -62,7 +62,7 @@ struct ContentView: View {
                         .bold()
                         .foregroundStyle(.green)
                         .id(food.name)
-                        .transition(.asymmetricInserion)
+                        .transition(.delayInserion)
                     Button(action: {
                         shouldShowInfo.toggle()
                     }) {
@@ -71,7 +71,7 @@ struct ContentView: View {
                     }
                     .buttonStyle(.plain)
                 }
-                Text("熱量 \(food.calorie.formatted()) 大卡")
+                Text("熱量 \(food.$calorie)")
                     .font(.title2)
                 VStack {
                     if (shouldShowInfo) {
@@ -127,7 +127,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(selectedFood: Food.examples.first!)
+//        ContentView(selectedFood: Food.examples.first!)
         ContentView(selectedFood: Food.examples.first!).previewDevice(.iPad)
         ContentView(selectedFood: Food.examples.first!).previewDevice(.iPhoneSE)
     }
