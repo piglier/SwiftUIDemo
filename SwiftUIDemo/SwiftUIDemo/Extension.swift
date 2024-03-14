@@ -26,14 +26,15 @@ extension Animation {
 }
 
 extension View {
-    func capluseButton() -> some View {
+    func capluseButton(_ borderShape: ButtonBorderShape = .capsule) -> some View {
         buttonStyle(.borderedProminent)
-            .buttonBorderShape(.capsule)
+            .buttonBorderShape(borderShape)
             .controlSize(.large)
     }
     
     func foodMainButton(radius: CGFloat = 8, style: some ShapeStyle = .bg) -> some View {
         RoundedRectangle(cornerRadius: radius).fill(.bg)
+//        background(RoundedRectangle(cornerRadius: radius).fill(.bg))
     }
 }
 
@@ -41,5 +42,14 @@ extension View {
 extension ShapeStyle where Self == Color {
     static var bg: Color { Color(.systemBackground) }
     static var bg2: Color { Color(.secondarySystemBackground) }
+    static var groupBg: Color { Color(.systemGroupedBackground) }
     
+}
+
+
+extension AnyLayout {
+    static func isUseVstack(if condition: Bool, @ViewBuilder content: @escaping () -> some View) -> some View {
+        let layout = condition ? AnyLayout(VStackLayout(spacing: 30)) : AnyLayout(HStackLayout(spacing: 30))
+        return layout(content)
+    }
 }

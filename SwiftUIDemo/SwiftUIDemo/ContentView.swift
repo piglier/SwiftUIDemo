@@ -38,15 +38,15 @@ struct ContentView: View {
     var selectFoodView: some View {
         VStack(spacing: 30) {
             Group {
-                if (selectedFood == .none) {
-                    Image("dinner")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } else {
-                    Text(selectedFood!.image)
+                if let selectedFood {
+                    Text(selectedFood.image)
                         .font(.system(size: 200))
                         .minimumScaleFactor(0.5)
                         .lineLimit(1)
+                } else {
+                    Image("dinner")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
                 }
             }
             .frame(height: 250)

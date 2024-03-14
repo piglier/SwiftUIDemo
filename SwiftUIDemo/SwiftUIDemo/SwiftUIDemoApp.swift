@@ -13,7 +13,7 @@ struct SwiftUIDemoApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ZIndexView()
+            FoodListDemo()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
