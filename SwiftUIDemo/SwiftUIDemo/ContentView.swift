@@ -75,20 +75,20 @@ struct ContentView: View {
                     .font(.title2)
                 VStack {
                     if (shouldShowInfo) {
-                        Grid(horizontalSpacing: 40, verticalSpacing: 12) {
-                            GridRow{
-                                Text("蛋白質")
-                                Text("脂肪")
-                                Text("碳水")
-                            }.frame(minWidth: 60)
-                            Divider()
-                                .gridCellUnsizedAxes(.horizontal)
-                                .padding(.horizontal, -10)
-                            GridRow{
-                                Text(food.$protein)
-                                Text(food.$fat)
-                                Text(food.$carb)
-                            }
+                            Grid(horizontalSpacing: 40, verticalSpacing: 12) {
+                                GridRow{
+                                    Text("蛋白質")
+                                    Text("脂肪")
+                                    Text("碳水")
+                                }.frame(minWidth: 60)
+                                Divider()
+                                    .gridCellUnsizedAxes(.horizontal)
+                                    .padding(.horizontal, -10)
+                                GridRow{
+                                    Text(food.$protein)
+                                    Text(food.$fat)
+                                    Text(food.$carb)
+                                }
                         }
                         .font(.title3)
                         .padding(.horizontal)

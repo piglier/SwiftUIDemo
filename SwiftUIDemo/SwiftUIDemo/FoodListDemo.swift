@@ -12,6 +12,8 @@ struct FoodListDemo: View {
     @Environment(\.dynamicTypeSize) var textSize
     @State private var foods: [Food] = Food.examples
     @State private var selectedFood = Set<Food.ID>()
+    @State private var isShowDetailSheet: Bool = false
+    @State private var detialSheetHeight: CGFloat = FoodSheetHeight.defaultValue
     
     private var isEditing: Bool { editMode?.wrappedValue == .active }
     
@@ -20,14 +22,28 @@ struct FoodListDemo: View {
         VStack(alignment: .leading) {
             titleBar
             List($foods, editActions: .all, selection: $selectedFood) { $food in
-                Text(food.name).padding(.vertical, 10)
+                HStack {
+                    Text(food.name).padding(.vertical, 10)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                        if isEditing { return }
+                        isShowDetailSheet = true
+                    }
+                    if isEditing {
+                        Image(systemName: "pencil")
+                            .font(.title2.bold())
+                            .foregroundStyle(.accent)
+                    }
+                }
+                
             }
             .listStyle(.plain)
             .padding(.horizontal)
         }.background(.groupBg)
             .safeAreaInset(edge: .bottom, content: buildFloatButton)
-            .sheet(isPresented: .constant(true), content: {
-                let food = foods.first!
+            .sheet(isPresented: $isShowDetailSheet, content: {
+                let food = foods[4]
                 let shouldShowVStack = textSize.isAccessibilitySize || food.image.count > 1
                 
                 AnyLayout.isUseVstack(if: shouldShowVStack) {
@@ -38,7 +54,18 @@ struct FoodListDemo: View {
                         buildNutritionView(title: "脂肪", value: food.$fat)
                         buildNutritionView(title: "碳水", value: food.$carb)
                     }
-                }.presentationDetents([.medium, .height(500)])
+                }
+                .padding(.vertical)
+                .padding(.vertical)
+                .overlay(content: {
+                    GeometryReader { proxy in
+                        Color.clear.preference(key: FoodSheetHeight.self, value: proxy.size.height)
+                    }
+                })
+                .onPreferenceChange(FoodSheetHeight.self, perform: { value in
+                    detialSheetHeight = value
+                })
+                .presentationDetents([.height(detialSheetHeight)])
             })
     }
     
@@ -83,7 +110,9 @@ struct FoodListDemo: View {
                 .opacity(isEditing ? 1: 0)
             HStack {
                 Spacer()
-                addButton.id(isEditing).scaleEffect(isEditing ? 0 : 1) .opacity(isEditing ? 0: 1)
+                addButton
+                    .scaleEffect(isEditing ? 0 : 1)
+                    .opacity(isEditing ? 0: 1)
                     .animation(.easeInOut, value: isEditing)
             }
         }
@@ -93,6 +122,16 @@ struct FoodListDemo: View {
         GridRow {
             Text(title).gridCellAnchor(.leading)
             Text(value).gridCellAnchor(.trailing)
+        }
+    }
+}
+
+
+extension FoodListDemo {
+    private struct FoodSheetHeight: PreferenceKey {
+        static var defaultValue: CGFloat = 300
+        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+            value = nextValue()
         }
     }
 }
