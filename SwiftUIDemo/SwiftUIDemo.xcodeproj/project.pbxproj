@@ -20,6 +20,7 @@
 		536865422B81ACEF00D181AC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 536865412B81ACEF00D181AC /* Preview Assets.xcassets */; };
 		536865442B81ACEF00D181AC /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536865432B81ACEF00D181AC /* Persistence.swift */; };
 		536865472B81ACEF00D181AC /* SwiftUIDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 536865452B81ACEF00D181AC /* SwiftUIDemo.xcdatamodeld */; };
+		537115BA2BA5B99C001851FB /* FoodForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537115B92BA5B99C001851FB /* FoodForm.swift */; };
 		537DFBD42BA52D2800FB3DD1 /* GeometryReaderDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537DFBD32BA52D2800FB3DD1 /* GeometryReaderDemo.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		536865412B81ACEF00D181AC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		536865432B81ACEF00D181AC /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		536865462B81ACEF00D181AC /* SwiftUIDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SwiftUIDemo.xcdatamodel; sourceTree = "<group>"; };
+		537115B92BA5B99C001851FB /* FoodForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodForm.swift; sourceTree = "<group>"; };
 		537DFBD32BA52D2800FB3DD1 /* GeometryReaderDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryReaderDemo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,6 +79,7 @@
 				5368653A2B81ACED00D181AC /* SwiftUIDemoApp.swift */,
 				5368653C2B81ACED00D181AC /* ContentView.swift */,
 				535FF2442B94405200D7861B /* FoodListDemo.swift */,
+				537115B92BA5B99C001851FB /* FoodForm.swift */,
 				535CF0872B89994600D24877 /* Food.swift */,
 				535CF08B2B89E06400D24877 /* PreviewDevice.swift */,
 				532D1C4E2B8E2E720012E5CA /* SuffixWrapper.swift */,
@@ -175,6 +178,7 @@
 				5368653D2B81ACED00D181AC /* ContentView.swift in Sources */,
 				535FF2452B94405200D7861B /* FoodListDemo.swift in Sources */,
 				537DFBD42BA52D2800FB3DD1 /* GeometryReaderDemo.swift in Sources */,
+				537115BA2BA5B99C001851FB /* FoodForm.swift in Sources */,
 				535FF2432B932F0200D7861B /* ZIndexView.swift in Sources */,
 				5368653B2B81ACED00D181AC /* SwiftUIDemoApp.swift in Sources */,
 				532D1C532B8F26AB0012E5CA /* ShapeStyleView.swift in Sources */,
@@ -320,6 +324,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -349,6 +354,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

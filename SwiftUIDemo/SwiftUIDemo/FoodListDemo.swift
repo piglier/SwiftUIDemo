@@ -7,66 +7,54 @@
 
 import SwiftUI
 
+
+enum FoodSheet: View, Identifiable {
+    case newFood((Food) -> Void)
+    case editFood(Binding<Food>)
+    case detailFood(Food)
+    
+    var id: UUID {
+        switch self {
+        case .newFood(_):
+            return UUID()
+        case .editFood(let binding):
+            return binding.wrappedValue.id
+        case .detailFood(let food):
+            return food.id
+        }
+    }
+    
+    var body: some View {
+        switch self {
+        case .newFood(let onSubmit):
+            FoodListDemo.FoodForm(food: .new, onSubmit: onSubmit)
+        case .editFood(let binding):
+            FoodListDemo.FoodForm(food: binding.wrappedValue) { food in
+                binding.wrappedValue = food
+            }
+        case .detailFood(let food):
+            FoodListDemo.DetailSheet(food: food)
+        }
+    }
+}
+
 struct FoodListDemo: View {
     @Environment(\.editMode) var editMode
-    @Environment(\.dynamicTypeSize) var textSize
     @State private var foods: [Food] = Food.examples
-    @State private var selectedFood = Set<Food.ID>()
-    @State private var isShowDetailSheet: Bool = false
-    @State private var detialSheetHeight: CGFloat = FoodSheetHeight.defaultValue
+    @State private var selectedFoodIds = Set<Food.ID>()
+    @State private var sheet: FoodSheet?
     
     private var isEditing: Bool { editMode?.wrappedValue == .active }
-    
     
     var body: some View {
         VStack(alignment: .leading) {
             titleBar
-            List($foods, editActions: .all, selection: $selectedFood) { $food in
-                HStack {
-                    Text(food.name).padding(.vertical, 10)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                        if isEditing { return }
-                        isShowDetailSheet = true
-                    }
-                    if isEditing {
-                        Image(systemName: "pencil")
-                            .font(.title2.bold())
-                            .foregroundStyle(.accent)
-                    }
-                }
-                
-            }
+            List($foods, editActions: .all, selection: $selectedFoodIds, rowContent: buildFoodRow)
             .listStyle(.plain)
             .padding(.horizontal)
         }.background(.groupBg)
             .safeAreaInset(edge: .bottom, content: buildFloatButton)
-            .sheet(isPresented: $isShowDetailSheet, content: {
-                let food = foods[4]
-                let shouldShowVStack = textSize.isAccessibilitySize || food.image.count > 1
-                
-                AnyLayout.isUseVstack(if: shouldShowVStack) {
-                    Text(food.image).font(.system(size: 100)).lineLimit(1).minimumScaleFactor(0.5)
-                    Grid(horizontalSpacing: 30, verticalSpacing: 12) {
-                        buildNutritionView(title: "熱量", value: food.$calorie)
-                        buildNutritionView(title: "蛋白質", value: food.$protein)
-                        buildNutritionView(title: "脂肪", value: food.$fat)
-                        buildNutritionView(title: "碳水", value: food.$carb)
-                    }
-                }
-                .padding(.vertical)
-                .padding(.vertical)
-                .overlay(content: {
-                    GeometryReader { proxy in
-                        Color.clear.preference(key: FoodSheetHeight.self, value: proxy.size.height)
-                    }
-                })
-                .onPreferenceChange(FoodSheetHeight.self, perform: { value in
-                    detialSheetHeight = value
-                })
-                .presentationDetents([.height(detialSheetHeight)])
-            })
+            .sheet(item: $sheet) { $0 }
     }
     
     var titleBar: some View {
@@ -82,7 +70,11 @@ struct FoodListDemo: View {
     }
     
     var addButton: some View {
-        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+        Button(action: {
+            sheet = .newFood({ food in
+                foods.append(food)
+            })
+        }, label: {
             Image(systemName: "plus.circle.fill")
                 .font(.system(size: 50))
                 .padding()
@@ -93,11 +85,10 @@ struct FoodListDemo: View {
     
     var deleteButton: some View {
         Button(action: {
-            foods = foods.filter { !selectedFood.contains($0.id) }
+            foods = foods.filter { !selectedFoodIds.contains($0.id) }
         }, label: {
-            Text("刪除全部").font(.title.bold())
+            Text("刪除已選擇項目").font(.title.bold())
                 .frame(maxWidth: .infinity)
-                
         }).capluseButton(.roundedRectangle(radius: 6))
             .padding(.horizontal, 50)
     }
@@ -118,20 +109,74 @@ struct FoodListDemo: View {
         }
     }
     
-    func buildNutritionView(title: String, value: String) -> some View {
-        GridRow {
-            Text(title).gridCellAnchor(.leading)
-            Text(value).gridCellAnchor(.trailing)
+    private func buildFoodRow(_ bindingFood: Binding<Food>) -> some View {
+        HStack {
+            Text(bindingFood.wrappedValue.name).padding(.vertical, 10)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    if isEditing {
+                        selectedFoodIds.insert(bindingFood.id)
+                        return
+                    }
+                    sheet = .detailFood(bindingFood.wrappedValue)
+            }
+            if isEditing {
+                Image(systemName: "pencil")
+                    .font(.title2.bold())
+                    .foregroundStyle(.accent)
+                    .onTapGesture {
+                        sheet = .editFood(bindingFood)
+                    }
+            }
         }
     }
+    
 }
 
 
 extension FoodListDemo {
-    private struct FoodSheetHeight: PreferenceKey {
-        static var defaultValue: CGFloat = 300
-        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-            value = nextValue()
+    struct DetailSheet: View {
+        @Environment(\.dynamicTypeSize) var textSize
+        @State private var detialSheetHeight: CGFloat = FoodSheetHeight.defaultValue
+        @State var food: Food
+        
+        private struct FoodSheetHeight: PreferenceKey {
+            static var defaultValue: CGFloat = 300
+            static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+                value = nextValue()
+            }
+        }
+        
+        func buildNutritionView(title: String, value: String) -> some View {
+            GridRow {
+                Text(title).gridCellAnchor(.leading)
+                Text(value).gridCellAnchor(.trailing)
+            }
+        }
+        
+        var body: some View {
+            let shouldShowVStack = textSize.isAccessibilitySize || food.image.count > 1
+            
+            AnyLayout.isUseVstack(if: shouldShowVStack) {
+                Text(food.image).font(.system(size: 100)).lineLimit(1).minimumScaleFactor(0.5)
+                Grid(horizontalSpacing: 30, verticalSpacing: 12) {
+                    buildNutritionView(title: "熱量", value: food.$calorie)
+                    buildNutritionView(title: "蛋白質", value: food.$protein)
+                    buildNutritionView(title: "脂肪", value: food.$fat)
+                    buildNutritionView(title: "碳水", value: food.$carb)
+                }
+            }
+            .padding(.vertical)
+            .overlay(content: {
+                GeometryReader { proxy in
+                    Color.clear.preference(key: FoodSheetHeight.self, value: proxy.size.height)
+                }
+            })
+            .onPreferenceChange(FoodSheetHeight.self, perform: { value in
+                detialSheetHeight = value
+            })
+            .presentationDetents([.height(detialSheetHeight)])
         }
     }
 }

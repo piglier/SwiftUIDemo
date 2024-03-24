@@ -36,6 +36,12 @@ extension View {
         RoundedRectangle(cornerRadius: radius).fill(.bg)
 //        background(RoundedRectangle(cornerRadius: radius).fill(.bg))
     }
+    
+    func mainButtonStyle(shape: ButtonBorderShape = .capsule) -> some View {
+        buttonStyle(.borderedProminent)
+        .buttonBorderShape(shape)
+        .controlSize(.large)
+    }
 }
 
 
