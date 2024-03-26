@@ -17,31 +17,13 @@ extension AnyTransition {
     
     static let foodTopOpacity = Self.move(edge: .top).combined(with: .opacity)
     
+    static let moveleadingWithOpactiy = Self.move(edge: .leading).combined(with: .opacity)
 }
 
 
 extension Animation {
     static let foodEaseInOut = easeIn(duration: 0.5)
     static let foodSpring = spring(dampingFraction: 0.5)
-}
-
-extension View {
-    func capluseButton(_ borderShape: ButtonBorderShape = .capsule) -> some View {
-        buttonStyle(.borderedProminent)
-            .buttonBorderShape(borderShape)
-            .controlSize(.large)
-    }
-    
-    func foodMainButton(radius: CGFloat = 8, style: some ShapeStyle = .bg) -> some View {
-        RoundedRectangle(cornerRadius: radius).fill(.bg)
-//        background(RoundedRectangle(cornerRadius: radius).fill(.bg))
-    }
-    
-    func mainButtonStyle(shape: ButtonBorderShape = .capsule) -> some View {
-        buttonStyle(.borderedProminent)
-        .buttonBorderShape(shape)
-        .controlSize(.large)
-    }
 }
 
 

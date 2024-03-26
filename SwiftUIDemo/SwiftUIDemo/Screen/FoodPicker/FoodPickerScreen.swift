@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 
-struct ContentView: View {
+struct FoodPickerScreen: View {
     @State var selectedFood: Food?
     @State var shouldShowInfo: Bool = false
     
@@ -26,8 +26,7 @@ struct ContentView: View {
                 selectButton
                 resetButton
             }
-            .padding()
-            .frame(maxWidth: .infinity, minHeight: UIScreen.main.bounds.height - 100)
+            .frame(minHeight: UIScreen.main.bounds.height - 100)
             .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
             .capluseButton()
             .animation(Animation.foodEaseInOut, value: selectedFood)
@@ -66,7 +65,7 @@ struct ContentView: View {
                     Button(action: {
                         shouldShowInfo.toggle()
                     }) {
-                        Image(systemName: "info.circle.fill")
+                        Image(sfSymbol: .infoCircle)
                             .foregroundStyle(.secondary)
                     }
                     .buttonStyle(.plain)
@@ -96,7 +95,7 @@ struct ContentView: View {
                         .background(foodMainButton())
                         .transition(.foodTopOpacity)
                     }
-                }.frame(maxWidth: .infinity).clipped()
+                }.maxWidth().clipped()
                 
             }
         }
@@ -127,14 +126,12 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-//        ContentView(selectedFood: Food.examples.first!)
-        ContentView(selectedFood: Food.examples.first!).previewDevice(.iPad)
-        ContentView(selectedFood: Food.examples.first!).previewDevice(.iPhoneSE)
+        FoodPickerScreen(selectedFood: Food.examples.first!).previewDevice(.iPad)
     }
 }
 
 
-extension ContentView {
+extension FoodPickerScreen {
     init(selectedFood: Food) {
         _selectedFood = .init(wrappedValue: selectedFood)
     }

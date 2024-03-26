@@ -8,12 +8,12 @@
 import SwiftUI
 
 @main
-struct SwiftUIDemoApp: App {
+struct AppEntry: App {
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
-            FoodListDemo()
+            FoodListScreen()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
