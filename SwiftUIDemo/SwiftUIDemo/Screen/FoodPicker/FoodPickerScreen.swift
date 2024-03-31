@@ -16,22 +16,26 @@ struct FoodPickerScreen: View {
     let foods = Food.examples
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 30) {
-                selectFoodView
-                Text("今天吃什麼?")
-                    .bold()
-                selectFoodInfo
-                Spacer().layoutPriority(1.0)
-                selectButton
-                resetButton
-            }
-            .frame(minHeight: UIScreen.main.bounds.height - 100)
-            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-            .capluseButton()
-            .animation(Animation.foodEaseInOut, value: selectedFood)
-            .animation(Animation.foodSpring, value: shouldShowInfo)
-        }.background(.bg2)
+        GeometryReader { proxy in
+            ScrollView {
+                VStack(spacing: 30) {
+                    selectFoodView
+                    Text("今天吃什麼?")
+                        .bold()
+                    selectFoodInfo
+                    Spacer().layoutPriority(1.0)
+                    selectButton
+                    resetButton
+                }
+                .padding()
+                .frame(minHeight: proxy.size.height)
+                .maxWidth()
+                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                .mainButtonStyle()
+                .animation(Animation.foodEaseInOut, value: selectedFood)
+                .animation(Animation.foodSpring, value: shouldShowInfo)
+            }.background(.bg2)
+        }
     }
     
     var selectFoodView: some View {
@@ -126,7 +130,7 @@ struct FoodPickerScreen: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        FoodPickerScreen(selectedFood: Food.examples.first!).previewDevice(.iPad)
+        FoodPickerScreen()
     }
 }
 

@@ -80,7 +80,7 @@ extension FoodListScreen.FoodForm {
     
     private var titleBar: some View {
         HStack{
-            Label("編輯食物資訊", sfSymbol: .pencil)
+            Label("編輯食物資訊", systemImage: .pencil)
                 .foregroundStyle(.accent)
                 .font(.title)
             Image(sfSymbol: .xmarkCircle)

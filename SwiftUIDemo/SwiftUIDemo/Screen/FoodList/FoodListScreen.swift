@@ -8,45 +8,57 @@
 import SwiftUI
 
 struct FoodListScreen: View {
-    @Environment(\.editMode) var editMode
-    @State private var foods: [Food] = Food.examples
+    @State private var editMode: EditMode = .inactive
+    @State private var foods: [Food] = Food.examples 
     @State private var selectedFoodIds = Set<Food.ID>()
     @State private var sheet: FoodSheet?
     
-    private var isEditing: Bool { editMode?.wrappedValue == .active }
+    private var isEditing: Bool { editMode.isEditing }
     
     var body: some View {
         VStack(alignment: .leading) {
             titleBar
             List($foods, editActions: .all, selection: $selectedFoodIds, rowContent: buildFoodRow)
-            .listStyle(.plain)
-            .padding(.horizontal)
-        }.background(.groupBg)
-            .safeAreaInset(edge: .bottom, content: buildFloatButton)
-            .sheet(item: $sheet)
+                .listStyle(.plain)
+                .background {
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(.groupBg2)
+                        .ignoresSafeArea(.container, edges: .bottom)
+                }
+                .padding(.horizontal)
+        }
+        .background(.groupBg)
+        .safeAreaInset(edge: .bottom, content: buildFloatButton)
+        .environment(\.editMode, $editMode)
+        .sheet(item: $sheet)
     }
     
+}
+
+// MARK: Subviews
+extension FoodListScreen {
     var titleBar: some View {
         HStack {
-            Label("食物清單", sfSymbol: .knife)
-                .push(to: .trailing)
+            Label("食物清單", systemImage: .knife)
+                .push(to: .leading)
                 .foregroundStyle(.accent)
                 .font(.title.bold())
             EditButton()
                 .buttonStyle(.bordered)
-            
+            addButton
+//                .scaleEffect(isEditing ? 0 : 1)
+//                .opacity(isEditing ? 0: 1)
+//                .animation(.easeInOut, value: isEditing)
+//            
         }.padding()
     }
     
     var addButton: some View {
         Button(action: {
-            sheet = .newFood({ food in
-                foods.append(food)
-            })
+            sheet = .newFood{ foods.append($0) }
         }, label: {
             Image(sfSymbol: .plus)
-                .font(.system(size: 50))
-                .padding()
+                .font(.system(size: 30))
                 .symbolRenderingMode(.palette)
                 .foregroundStyle(.white, .accent)
         })
@@ -61,24 +73,19 @@ struct FoodListScreen: View {
         }).capluseButton(.roundedRectangle(radius: 6))
             .padding(.horizontal, 50)
     }
-            
+    
     
     func buildFloatButton() -> some View {
-        ZStack {
-            deleteButton.id(isEditing)
-                .transition(.moveleadingWithOpactiy.animation(.easeInOut))
-                .opacity(isEditing ? 1: 0)
-                addButton
-                    .scaleEffect(isEditing ? 0 : 1)
-                    .opacity(isEditing ? 0: 1)
-                    .animation(.easeInOut, value: isEditing)
-                    .push(to: .trailing)
-        }
+        deleteButton.id(isEditing)
+            .transition(.moveleadingWithOpactiy.animation(.easeInOut))
+            .opacity(isEditing ? 1: 0)
     }
     
     private func buildFoodRow(_ bindingFood: Binding<Food>) -> some View {
         HStack {
-            Text(bindingFood.wrappedValue.name).padding(.vertical, 10)
+            Text(bindingFood.wrappedValue.name)
+                .font(.title3)
+                .padding(.vertical, 10)
                 .push(to: .leading)
                 .contentShape(Rectangle())
                 .onTapGesture {
@@ -87,7 +94,7 @@ struct FoodListScreen: View {
                         return
                     }
                     sheet = .detailFood(bindingFood.wrappedValue)
-            }
+                }
             if isEditing {
                 Image(sfSymbol: .pencil)
                     .font(.title2.bold())
@@ -96,11 +103,9 @@ struct FoodListScreen: View {
                         sheet = .editFood(bindingFood)
                     }
             }
-        }
+        }.listRowBackground(Color.clear)
     }
-    
 }
-
 
 
 

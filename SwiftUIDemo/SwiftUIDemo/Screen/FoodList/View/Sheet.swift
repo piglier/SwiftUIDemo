@@ -11,14 +11,11 @@ enum FoodSheet: View, Identifiable {
     case editFood(Binding<Food>)
     case detailFood(Food)
     
-    var id: UUID {
+    var id: Food.ID {
         switch self {
-        case .newFood(_):
-            return UUID()
-        case .editFood(let binding):
-            return binding.wrappedValue.id
-        case .detailFood(let food):
-            return food.id
+        case .newFood(_):               return UUID()
+        case .editFood(let binding):    return binding.wrappedValue.id
+        case .detailFood(let food):     return food.id
         }
     }
     
