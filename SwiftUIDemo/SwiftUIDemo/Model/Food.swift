@@ -9,7 +9,7 @@ import Foundation
 
 
 struct Food: Equatable, Identifiable {
-    let id = UUID()
+    var id = UUID()
     var name: String
     var image: String
     @Suffix("卡") var calorie: Double = .zero
@@ -33,3 +33,5 @@ struct Food: Equatable, Identifiable {
         Food(name: "", image: "")
     }
 }
+
+extension Food: Codable {}

@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct SettingsScreen: View {
-    @State private var isUseDarkMode: Bool = false
-    @State private var unit: Units = .g
-    @State private var initPage: InitialPage = .list
+    
+    @AppStorage(.isUseDarkMode) private var isUseDarkMode: Bool = false
+    @AppStorage(.unit) private var unit: Units = .g
+    @AppStorage(.startTab) private var initPage: HomeScreen.Tab = .list
     @State private var confirmationDialog: Dialog = .inactive
     
     private var showDialog: Binding<Bool> {
@@ -21,33 +22,34 @@ struct SettingsScreen: View {
     }
     var body: some View {
         Form {
-            Section("基本設定") {}
-            Toggle(isOn: $isUseDarkMode) {
-                Label("深色模式", systemImage: .moon)
-            }
-            Picker(selection: $unit) {
-                ForEach(Units.allCases) { $0 }
-            } label: {
-                Label("單位", systemImage: .unitSign)
-            }
-            
-            // TODO: 確認可不可用enum
-            Picker(selection: $initPage) {
-//                ForEach(InitialPage.allCases) { $0 }
-                Text("食物清單").tag(HomeScreen.Tab.list)
-                Text("隨機食物").tag(HomeScreen.Tab.picker)
-            } label: {
-                Label("啟動畫面", systemImage: .house)
+            Section("基本設定") {
+                Toggle(isOn: $isUseDarkMode) {
+                    Label("深色模式", systemImage: .moon)
+                }
+                Picker(selection: $unit) {
+                    ForEach(Units.allCases) { $0 }
+                } label: {
+                    Label("單位", systemImage: .unitSign)
+                }
+                Picker(selection: $initPage) {
+                    Text("食物清單").tag(HomeScreen.Tab.list)
+                    Text("隨機食物").tag(HomeScreen.Tab.picker)
+                } label: {
+                    Label("啟動畫面", systemImage: .house)
+                }
             }
             
-            Section("危險區域") {}
-            ForEach(Dialog.allCases) { d in
-                if (d != .inactive) { Button(d.rawValue) { confirmationDialog = d } }
+            Section("危險區域") {
+                ForEach(Dialog.allCases) { d in
+                    if (d != .inactive) { Button(d.rawValue) { confirmationDialog = d } }
+                }
             }
             .confirmationDialog(confirmationDialog.rawValue, 
                                 isPresented: showDialog,
                                 titleVisibility: .visible) {
-                    Button("確定"){}
+                    Button("確定") {
+                        confirmationDialog.action()
+                    }
                     Button("取消", role: .cancel) {}
                 } message: {
                     Text(confirmationDialog.message)
@@ -56,15 +58,7 @@ struct SettingsScreen: View {
         }
     }
     
-    private enum Units: String, CaseIterable, Identifiable, View {
-        case g = "g", kg = "kg"
-        
-        var id: Self { self }
-        
-        var body: some View {
-            Text(self.rawValue)
-        }
-    }
+    
     
     private enum InitialPage: String, CaseIterable, Identifiable, View {
         case random = "隨機食物", list = "食物清單"
@@ -93,6 +87,20 @@ private enum Dialog: String, CaseIterable, Identifiable {
             return "將重置食物清單，\n此操作無法復原，確定進行嗎？"
         case .inactive:
             return ""
+        }
+    }
+    
+    func action() {
+        switch self {
+        case .resetSettings:
+            let keys: [UserDefaults.Key] = [.isUseDarkMode, .startTab, .unit]
+            for key in keys {
+                UserDefaults.standard.removeObject(forKey: key.rawValue)
+            }
+        case .resetFoodList:
+            UserDefaults.standard.removeObject(forKey: UserDefaults.Key.foodList.rawValue)
+        case .inactive:
+            return
         }
     }
 }

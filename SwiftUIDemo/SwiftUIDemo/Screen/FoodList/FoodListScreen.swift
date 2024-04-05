@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FoodListScreen: View {
     @State private var editMode: EditMode = .inactive
-    @State private var foods: [Food] = Food.examples 
+    @AppStorage(.foodList) private var foods = Food.examples
     @State private var selectedFoodIds = Set<Food.ID>()
     @State private var sheet: FoodSheet?
     

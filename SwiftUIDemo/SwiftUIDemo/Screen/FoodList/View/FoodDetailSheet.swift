@@ -41,6 +41,8 @@ extension FoodListScreen {
                 }
             }
             .padding(.vertical)
+            .maxWidth()
+            .background(.groupBg2)
             .readGeometry(FoodSheetHeight.self, keyPath: \.size.height)
             .onPreferenceChange(FoodSheetHeight.self, perform: { value in
                 detialSheetHeight = value

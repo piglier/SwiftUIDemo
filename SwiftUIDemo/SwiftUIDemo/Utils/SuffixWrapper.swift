@@ -20,3 +20,5 @@ import Foundation
         self.suffix = suffix
     }
 }
+
+extension Suffix: Codable {}
