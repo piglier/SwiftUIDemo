@@ -12,7 +12,8 @@ import Foundation
     let suffix: String
     
     var projectedValue: String {
-        wrappedValue.formatted() + " \(suffix)"
+        let suitableSuffix: String = suffix.isEmpty ? "" : " \(suffix)"
+        return wrappedValue.formatted(.number.precision(.fractionLength(0...1))) + suitableSuffix
     }
     
     init(wrappedValue: Double, _ suffix: String) {

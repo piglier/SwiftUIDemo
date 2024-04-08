@@ -32,6 +32,7 @@ struct Food: Equatable, Identifiable {
     static var new: Food {
         Food(name: "", image: "")
     }
+    
 }
 
 extension Food: Codable {}
