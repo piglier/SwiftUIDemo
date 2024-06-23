@@ -17,3 +17,10 @@ extension AppStorage {
         self.init(wrappedValue: wrappedValue, key.rawValue, store: store)
     }
 }
+
+
+extension AppStorage where Value: MyUnitProtocol {
+    init(wrappedValue: Value = .defaultUnit, _ key: UserDefaults.Key, store: UserDefaults? = nil) where Value: RawRepresentable, Value.RawValue == String {
+        self.init(wrappedValue: wrappedValue, key.rawValue, store: store)
+    }
+}

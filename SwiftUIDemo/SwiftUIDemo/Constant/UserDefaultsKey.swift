@@ -8,6 +8,10 @@ import Foundation
 
 extension UserDefaults {
     enum Key: String {
-        case isUseDarkMode, unit, startTab, foodList
+        case isUseDarkMode
+        case preferredWeightUnit
+        case preferredEnergyUnit
+        case startTab 
+        case foodList
     }
 }

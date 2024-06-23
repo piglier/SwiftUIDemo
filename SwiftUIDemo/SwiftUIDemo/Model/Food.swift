@@ -5,17 +5,31 @@
 //  Created by 朱彥睿 on 2024/2/24.
 //
 
-import Foundation
+import SwiftUI
 
 
 struct Food: Equatable, Identifiable {
     var id = UUID()
     var name: String
     var image: String
-    @Suffix("卡") var calorie: Double = .zero
-    @Suffix("g") var carb: Double = .zero
-    @Suffix("g") var fat: Double = .zero
-    @Suffix("g") var protein: Double = .zero
+    @energyUnit var calorie: Double
+    @weightUnit var carb: Double
+    @weightUnit var fat: Double
+    @weightUnit var protein: Double
+    
+}
+
+
+extension Food {
+    private init(id: UUID = UUID(), name: String, image: String, calorie: Double, carb: Double, fat: Double, protein: Double) {
+        self.id = id
+        self.name = name
+        self.image = image
+        self._calorie = energyUnit(wrappedValue: calorie, .cal)
+        self._carb = weightUnit(wrappedValue: carb, .g)
+        self._fat = weightUnit(wrappedValue: fat, .g)
+        self._protein = weightUnit(wrappedValue: protein, .g)
+    }
     
     static let examples = [
         Food(name: "漢堡", image: "🍔", calorie: 294, carb: 14, fat: 24, protein: 17),
@@ -30,9 +44,17 @@ struct Food: Equatable, Identifiable {
     ]
     
     static var new: Food {
-        Food(name: "", image: "")
+        @AppStorage(.preferredWeightUnit) var preferWeightUnit: MyWeightUnit
+        @AppStorage(.preferredEnergyUnit) var preferEnergyUnit: MyEnergyUnit
+        return Food(
+            name: "",
+            image: "",
+            calorie: .init(wrappedValue: .zero, preferEnergyUnit),
+            carb: .init(wrappedValue: .zero, preferWeightUnit),
+            fat: .init(wrappedValue: .zero, preferWeightUnit),
+            protein: .init(wrappedValue: .zero, preferWeightUnit)
+        )
     }
-    
 }
 
 extension Food: Codable {}

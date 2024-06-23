@@ -26,6 +26,7 @@
 		536865472B81ACEF00D181AC /* SwiftUIDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 536865452B81ACEF00D181AC /* SwiftUIDemo.xcdatamodeld */; };
 		537115BA2BA5B99C001851FB /* FoodForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537115B92BA5B99C001851FB /* FoodForm.swift */; };
 		537DFBD42BA52D2800FB3DD1 /* GeometryReaderDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537DFBD32BA52D2800FB3DD1 /* GeometryReaderDemo.swift */; };
+		537FE5B92C2814B000DCBB97 /* MyUnitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537FE5B82C2814AF00DCBB97 /* MyUnitProtocol.swift */; };
 		53A085FE2BB40E2D0005218E /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A085FD2BB40E2D0005218E /* HomeScreen.swift */; };
 		53DCB8722BB00D4200F6D34C /* FoodPickerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DCB86E2BB00D4200F6D34C /* FoodPickerScreen.swift */; };
 		53DCB8732BB00D4200F6D34C /* FoodListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DCB8702BB00D4200F6D34C /* FoodListScreen.swift */; };
@@ -67,6 +68,7 @@
 		536865462B81ACEF00D181AC /* SwiftUIDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SwiftUIDemo.xcdatamodel; sourceTree = "<group>"; };
 		537115B92BA5B99C001851FB /* FoodForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodForm.swift; sourceTree = "<group>"; };
 		537DFBD32BA52D2800FB3DD1 /* GeometryReaderDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryReaderDemo.swift; sourceTree = "<group>"; };
+		537FE5B82C2814AF00DCBB97 /* MyUnitProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyUnitProtocol.swift; sourceTree = "<group>"; };
 		53A085FD2BB40E2D0005218E /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		53DCB86E2BB00D4200F6D34C /* FoodPickerScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodPickerScreen.swift; sourceTree = "<group>"; };
 		53DCB8702BB00D4200F6D34C /* FoodListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodListScreen.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				532D1C4E2B8E2E720012E5CA /* SuffixWrapper.swift */,
+				537FE5B82C2814AF00DCBB97 /* MyUnitProtocol.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				536175232BB96DFC009D1737 /* AppStorage+.swift in Sources */,
 				532D1C512B8EF6B70012E5CA /* Extension.swift in Sources */,
 				53DCB87D2BB262A600F6D34C /* Sheet.swift in Sources */,
+				537FE5B92C2814B000DCBB97 /* MyUnitProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,7 +397,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P2N5GMFKQQ;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.piglier.SwiftUIDemoTests;
@@ -415,7 +419,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P2N5GMFKQQ;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.piglier.SwiftUIDemoTests;

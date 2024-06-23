@@ -74,7 +74,7 @@ struct FoodPickerScreen: View {
                     }
                     .buttonStyle(.plain)
                 }
-                Text("熱量 \(food.$calorie)")
+                Text("熱量 \(food.$calorie.description)")
                     .font(.title2)
                 VStack {
                     if (shouldShowInfo) {
@@ -88,9 +88,9 @@ struct FoodPickerScreen: View {
                                     .gridCellUnsizedAxes(.horizontal)
                                     .padding(.horizontal, -10)
                                 GridRow{
-                                    Text(food.$protein)
-                                    Text(food.$fat)
-                                    Text(food.$carb)
+                                    Text(food.$protein.description)
+                                    Text(food.$fat.description)
+                                    Text(food.$carb.description)
                                 }
                         }
                         .font(.title3)

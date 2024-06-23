@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-private enum FoodFormField: Int { case name, image, calorie, protein, fat, carb }
+enum FoodFormField: Int { case name, image, calorie, protein, fat, carb }
 
 private extension TextField where Label == Text {
     func focus(field: FocusState<FoodFormField?>.Binding, value: FoodFormField) -> some View {
@@ -19,7 +19,7 @@ private extension TextField where Label == Text {
     }
 }
 
-extension FoodListScreen {
+extension FoodListScreen { 
     
     struct FoodForm: View {
         
@@ -93,12 +93,26 @@ extension FoodListScreen.FoodForm {
     }
     
     
-    private func buildNutricContent(title: String, num: Binding<Double>, unit: String = "g", focus: FoodFormField) -> some View {
+    func buildNutricContent<Unit: MyUnitProtocol & Hashable>(title: String, value: Binding<Suffix<Unit>>, field: FoodFormField) -> some View {
         LabeledContent(title) {
-            TextField("", value: num, format: .number.precision(.fractionLength(1)))
-                .keyboardType(.decimalPad)
-                .focused($field, equals: focus)
-            Text(unit)
+            HStack {
+                TextField(
+                    "",
+                    value: Binding(
+                        get: { value.wrappedValue.wrappedValue },
+                        set: { value.wrappedValue.wrappedValue = $0 }
+                    ),
+                    format: .number.precision(.fractionLength(1)))
+                    .focused($field, equals: field)
+                    .keyboardType(.decimalPad)
+                if (Unit.allCases.count <= 1) {
+                    value.unit.wrappedValue.font(.body)
+                } else {
+                    Picker("單位", selection: value.unit) {
+                        ForEach(Unit.allCases)
+                    }.labelsHidden()
+                }
+            }
         }
     }
     
@@ -113,10 +127,10 @@ extension FoodListScreen.FoodForm {
                     .submitLabel(.next)
                     .focused($field, equals: .image)
             }
-            buildNutricContent(title: "熱量", num: $food.calorie, unit: "熱量", focus: .calorie)
-            buildNutricContent(title: "蛋白質", num: $food.protein, focus: .protein)
-            buildNutricContent(title: "脂肪", num: $food.fat, focus: .fat)
-            buildNutricContent(title: "碳水", num: $food.carb, focus: .carb)
+            buildNutricContent(title: "熱量", value: $food.$calorie, field: .calorie)
+            buildNutricContent(title: "蛋白質", value: $food.$protein, field: .protein)
+            buildNutricContent(title: "脂肪", value: $food.$fat, field: .fat)
+            buildNutricContent(title: "碳水", value: $food.$carb, field: .carb)
         }.padding(.top, -16)
     }
     

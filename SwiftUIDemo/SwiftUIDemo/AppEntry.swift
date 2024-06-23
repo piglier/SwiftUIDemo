@@ -17,4 +17,16 @@ struct AppEntry: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
+    
+    init() {
+        applyTabBarBackground()
+    }
+    
+    func applyTabBarBackground() {
+        let tabbarAppearance = UITabBarAppearance()
+        tabbarAppearance.configureWithTransparentBackground()
+        tabbarAppearance.backgroundColor = .secondarySystemBackground.withAlphaComponent(0.3)
+        tabbarAppearance.backgroundEffect = UIBlurEffect(style: .systemChromeMaterial)
+        UITabBar.appearance().scrollEdgeAppearance = tabbarAppearance
+    }
 }
